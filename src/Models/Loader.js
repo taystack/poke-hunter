@@ -1,9 +1,20 @@
+import {
+  MapTiles,
+  Character,
+} from "../Assets";
+
+
+const imgMap = {
+  "map": MapTiles,
+  "player": Character,
+};
+
 export default class Loader {
   constructor() {
     this.images = {};
   }
 
-  loadImage(key, src) {
+  loadImage(key) {
     const img = new Image();
 
     const d = new Promise((resolve, reject) => {
@@ -13,9 +24,12 @@ export default class Loader {
       }
 
       img.onerror = () => {
-        reject(`Can't load img src="${src}"`);
+        reject(`Can't load img src="${imgMap[key]}"`);
       }
     });
+
+    img.src = imgMap[key];
+    return d;
   }
 
   getImage(key) {

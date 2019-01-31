@@ -1,11 +1,10 @@
 export default {
   BallPosition: (open) => ({
     position: "absolute",
-    bottom: open ? "10em" : "1em",
+    bottom: open ? "4em" : "1em",
     right: "50%",
-    left: "50%",
     userSelect: "none",
-    transition: `bottom 500ms ${open ? 0 : 200}ms`,
+    transition: `bottom 150ms ${open ? 0 : 300}ms`,
   }),
   BallBody: {
     opacity: 1,

@@ -1,6 +1,5 @@
 import React from "react";
 import PropTypes from "prop-types";
-import MenuIcon from "../Images/Menu.png";
 import BallTop from "../Images/BallTop.png";
 import BallBottom from "../Images/BallBottom.png";
 import Styles from "./MenuBallStyles";
@@ -34,7 +33,11 @@ export default class MenuBall extends React.Component {
       <div
         style={Styles.BallPosition(open)}
       >
-        <div onClick={this.props.onMenuClick} style={style}>
+        <div
+          onClick={this.props.onMenuClick}
+          onTouchStart={this.props.onMenuClick}
+          style={style}
+        >
           <img src={BallTop} alt="menu" style={topStyle} />
           <img src={BallBottom} alt="menu" style={bottomStyle} />
         </div>

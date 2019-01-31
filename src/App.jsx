@@ -5,9 +5,7 @@ import Controls from "./Controls/Controls";
 class App extends Component {
   render() {
     return (
-      <Controls>
-        <div id="game-entry"></div>
-      </Controls>
+      <Controls />
     );
   }
 }

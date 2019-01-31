@@ -2,14 +2,18 @@ import React from "react";
 import Joystick from "./Joystick";
 import MenuBall from "./MenuBall";
 import Menu from "./Menu";
+import Game from "../Game/Game";
 import { JoystickPadPosition } from "../Helpers/Position";
+import Styles from "./MapStyles";
 
 
 class Controls extends React.Component {
-  static propTypes = {}
+  static MAP_SIZE = 512;
 
   constructor(props) {
     super(props);
+
+    this.canvas = React.createRef();
 
     this.state = {
       controlling: false,
@@ -30,6 +34,12 @@ class Controls extends React.Component {
     });
   }
 
+  componentDidMount() {
+    const context = this.canvas.current.getContext("2d");
+    this.Game = new Game(context, Controls.MAP_SIZE);
+    this.forceUpdate();
+  }
+
   getDirection(toX, toY) {
     const x = this.state.x - toX;
     const y = this.state.y - toY;
@@ -37,28 +47,42 @@ class Controls extends React.Component {
   }
 
   handleControlStart(event) {
+    event.stopPropagation();
+    event.preventDefault();
+    const e = event.touches ? event.touches[0] : event;
+    if (this.state.menuOpen) return;
     this.setState({
       controlling: true,
-      x: event.pageX,
-      y: event.pageY,
+      x: e.pageX,
+      y: e.pageY,
       toX: 0,
       toY: 0,
     });
   }
 
   handleControlMove(event) {
+    event.stopPropagation();
+    event.preventDefault();
+    const e = event.touches ? event.touches[0] : event;
     if (this.state.controlling) {
-      const { x, y } = this.getDirection(event.pageX, event.pageY);
-      this.setState({ toX: x, toY: y });
+      const { x, y } = this.getDirection(e.pageX, e.pageY);
+      this.setState({ toX: x, toY: y }, () => {
+        this.Game.moveX = this.state.toX;
+        this.Game.moveY = this.state.toY;
+      });
     }
   }
 
   handleControlEnd(event) {
-    if (!this.state.controlling) return;
+    event.stopPropagation();
+    event.preventDefault();
     this.setState({
       controlling: false,
       toX: 0,
       toY: 0,
+    }, () => {
+      this.Game.moveX = 0;
+      this.Game.moveY = 0;
     });
   }
 
@@ -81,6 +105,12 @@ class Controls extends React.Component {
         onTouchMove={this.handleControlMove}
         onTouchStart={this.handleControlStart}
       >
+        <canvas
+          width="512" height="512"
+          style={Styles.Canvas}
+          ref={this.canvas}
+          id="game-entry"
+        />
         <Joystick
           x={x}
           y={y}

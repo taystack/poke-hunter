@@ -1,13 +1,8 @@
-import Camera from "./Camera";
-
-
 export default class Map {
   constructor() {
     this.cols = 12;
     this.rows = 12;
     this.tSize = 64;
-
-    this.camera = new Camera(this, )
   }
 
   get layers() {
@@ -42,5 +37,34 @@ export default class Map {
 
   getTile(layer, col, row) {
     return this.layers[layer][row * this.cols + col];
+  }
+
+  isSolidTileAtXY(x, y) {
+    const col = Math.floor(x / this.tSize);
+    const row = Math.floor(y / this.tSize);
+
+    // tiles 3 and 5 are solid -- the rest are walkable
+    // loop through all layers and return TRUE if any tile is solid
+    return this.layers.reduce((res, layer, index) => {
+      const tile = this.getTile(index, col, row);
+      const isSolid = tile === 3 || tile === 5;
+      return res || isSolid;
+    }, false);
+  }
+
+  getCol(x) {
+    return Math.floor(x / this.tSize);
+  }
+
+  getRow(y) {
+    return Math.floor(y / this.tSize);
+  }
+
+  getX(col) {
+    return col * this.tSize;
+  }
+
+  getY(row) {
+    return row * this.tSize;
   }
 }
