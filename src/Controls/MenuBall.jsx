@@ -1,7 +1,7 @@
 import React from "react";
 import PropTypes from "prop-types";
-import BallTop from "../Images/BallTop.png";
-import BallBottom from "../Images/BallBottom.png";
+import BallTop from "../Assets/BallTop.png";
+import BallBottom from "../Assets/BallBottom.png";
 import Styles from "./MenuBallStyles";
 
 

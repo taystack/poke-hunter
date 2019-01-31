@@ -1,4 +1,10 @@
 export default class Map {
+  static GRASS = 1;
+  static DIRT = 2;
+  static TREE = 3;
+  static TREE_TOP = 4;
+  static BUSH = 5;
+
   constructor() {
     this.cols = 12;
     this.rows = 12;
@@ -47,7 +53,7 @@ export default class Map {
     // loop through all layers and return TRUE if any tile is solid
     return this.layers.reduce((res, layer, index) => {
       const tile = this.getTile(index, col, row);
-      const isSolid = tile === 3 || tile === 5;
+      const isSolid = tile === Map.TREE || tile === Map.BUSH;
       return res || isSolid;
     }, false);
   }

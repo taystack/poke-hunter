@@ -64,7 +64,7 @@ export default class Game {
     let dirx = 0;
     let diry = 0;
     if (this.moveX) dirx = this.moveX / Math.abs(this.moveX);
-    else if (this.moveY) diry = this.moveY / - Math.abs(this.moveY);
+    if (this.moveY) diry = this.moveY / - Math.abs(this.moveY);
     this.player.move(delta, dirx, diry);
     this.camera.update();
   }
@@ -134,6 +134,6 @@ export default class Game {
     // draw map top layer
     this._drawLayer(1);
 
-    this._drawGrid();
+    // this._drawGrid();
   }
 }
